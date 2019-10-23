@@ -21,7 +21,7 @@ def main():
 		user = review.find('span', attrs={'class': 'italic'}).text.split()[1]
 		rating = review.find('div', attrs={'class': 'rating-static'}).text
 		content = review.find('p', attrs={'class': 'review-content'}).text
-		recommend = review.find('div', attrs={'class': 'boldest'}).text
+		recommend = review.find('div', attrs={'class': 'boldest'}).text.strip()
 		
 		print(recommend)
 		if user not in reviews:

@@ -11,6 +11,7 @@ def main():
 		print("got page 1!")
 		f = open("ratings.txt", "w+")
 		f.write(page1.text)
+		f.close()
 	else:
 		print("didn't get it :(")
 		exit(1)
