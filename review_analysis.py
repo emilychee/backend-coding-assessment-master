@@ -73,6 +73,7 @@ def main():
 	top_users = sorted(top_users, key=lambda i: (-i['rating'], -i['sentiment']))
 
 	# printing
+	print("TOP " + str(NUM_REVIEWS_PRINT) + " OVERLY POSITIVE REVIEWS")
 	print("--------------------------------------------------------------------")
 	for i in range(NUM_REVIEWS_PRINT):
 		print(reviews[top_users[i]["user"]]["date"])
