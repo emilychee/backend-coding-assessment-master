@@ -1,7 +1,5 @@
 import re
 import requests
-import urllib.request
-import time
 from bs4 import BeautifulSoup
 from textblob import TextBlob
 
@@ -41,10 +39,13 @@ def get_reviews(pages_to_scrape):
 			rating = find_rating(rating_element)
 			content = review.find('p', attrs={'class': 'review-content'}).text
 			recommend = review.find('div', attrs={'class': 'boldest'}).text.strip()
+			date = review.find('div', attrs={'class': 'font-20'}).text
+			title = review.find('h3').text
 			# only save reviews that are consistent
 			if (rating >= 2.5 and recommend == "Yes") or (rating < 2.5 and recommend == "No"):
 				if user not in reviews:
-					reviews[user] = {"review": content, "rating": rating}
+					reviews[user] = {"review": content, "rating": rating, "recommend": recommend,
+									 "date": date, "title": title}
 
 	return reviews
 
@@ -63,13 +64,22 @@ def get_review_sentiment(reviews):
 
 def main():
 	PAGES_TO_SCRAPE = 5
+	NUM_REVIEWS_PRINT = 3
 
+	# scrape reviews, clean them, and get sentiment score
+	# then sort based off of rating, then sentiment score
 	reviews = get_reviews(PAGES_TO_SCRAPE)
 	top_users = get_review_sentiment(reviews)
 	top_users = sorted(top_users, key=lambda i: (-i['rating'], -i['sentiment']))
 
-	for u in top_users:
-		print(u)
+	# printing
+	print("--------------------------------------------------------------------")
+	for i in range(NUM_REVIEWS_PRINT):
+		print(reviews[top_users[i]["user"]]["date"])
+		print("rating: " + str(top_users[i]["rating"]) + "/5.0")
+		print(top_users[i]["user"] + ": " + reviews[top_users[i]["user"]]["title"])
+		print(reviews[top_users[i]["user"]]["review"])
+		print("--------------------------------------------------------------------")
 
 
 if __name__ == "__main__":
