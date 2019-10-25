@@ -61,7 +61,11 @@ class CarReviewAnalyzer():
             self.parse_html(page.text)
 
     def clean_review(self, review):
-        # cleans the review by removing links and special characters
+        """Clean the review by removing links and special characters."""
+
+        # (@[A-Za-z0-9]+): get rid of handles
+        # ([^0-9A-Za-z \t]): get rid of special characters
+        # (\w+:\/\/\S+): get rid of links
         return ' '.join(re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)", " ", review).split())
 
     def get_review_sentiment(self):
