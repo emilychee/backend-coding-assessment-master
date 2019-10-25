@@ -16,10 +16,31 @@ class CarReviewAnalyzer():
         rating = int(rating_string) / 10
         return rating
 
-    def parse_username(self, user_element):
-        temp = user_element.text.split('-')[1]
+    def parse_username(self, usertext):
+        list1 = usertext.split('-')
+        if len(list1) > 2:
+            temp = "-".join(list1[1:])
+        else:
+            temp = list1[1]
         user = temp.strip()
         return user
+
+    def parse_html(self, textpage):
+        soup = BeautifulSoup(textpage, "html.parser")
+        for review in soup.findAll('div', attrs={'class': 'review-entry'}):
+            user_element = review.find('span', attrs={'class': 'italic'})
+            user = self.parse_username(user_element.text)
+            rating_element = review.find('div', attrs={'class': 'rating-static'})
+            rating = self.find_rating(rating_element)
+            content = review.find('p', attrs={'class': 'review-content'}).text
+            recommend = review.find('div', attrs={'class': 'boldest'}).text.strip()
+            date = review.find('div', attrs={'class': 'font-20'}).text
+            title = review.find('h3').text
+            # only save reviews that are consistent
+            if (rating >= 2.5 and recommend == "Yes") or (rating < 2.5 and recommend == "No"):
+                if user not in self.reviews:
+                    self.reviews[user] = {"review": content, "rating": rating, "recommend": recommend,
+                                          "date": date, "title": title}
 
     def get_reviews(self):
         """Scrapes pages and puts reveiws into dictionary."""
@@ -37,21 +58,7 @@ class CarReviewAnalyzer():
                 print(e)
 
             # put data into a dictionary
-            soup = BeautifulSoup(page.text, "html.parser")
-            for review in soup.findAll('div', attrs={'class': 'review-entry'}):
-                user_element = review.find('span', attrs={'class': 'italic'})
-                user = self.parse_username(user_element)
-                rating_element = review.find('div', attrs={'class': 'rating-static'})
-                rating = self.find_rating(rating_element)
-                content = review.find('p', attrs={'class': 'review-content'}).text
-                recommend = review.find('div', attrs={'class': 'boldest'}).text.strip()
-                date = review.find('div', attrs={'class': 'font-20'}).text
-                title = review.find('h3').text
-                # only save reviews that are consistent
-                if (rating >= 2.5 and recommend == "Yes") or (rating < 2.5 and recommend == "No"):
-                    if user not in self.reviews:
-                        self.reviews[user] = {"review": content, "rating": rating, "recommend": recommend,
-                                         "date": date, "title": title}
+            self.parse_html(page.text)
 
     def clean_review(self, review):
         # cleans the review by removing links and special characters
@@ -88,25 +95,12 @@ def main():
                 'https://www.dealerrater.com/dealer/McKaig-Chevrolet-Buick-A-Dealer-For-The-People-dealer-reviews-23685/page4/?filter=ALL_REVIEWS#link',
                 'https://www.dealerrater.com/dealer/McKaig-Chevrolet-Buick-A-Dealer-For-The-People-dealer-reviews-23685/page5/?filter=ALL_REVIEWS#link']
 
+    # scrape reviews, clean them, and get sentiment score
+    # then sort based off of rating, then sentiment score
     analyzer = CarReviewAnalyzer(NUM_REVIEWS_PRINT, url_list)
     analyzer.get_reviews()
     analyzer.get_review_sentiment()
     analyzer.print_results()
-    # scrape reviews, clean them, and get sentiment score
-    # then sort based off of rating, then sentiment score
-    """reviews = get_reviews(PAGES_TO_SCRAPE)
-    top_users = get_review_sentiment(reviews)
-    top_users = sorted(top_users, key=lambda i: (-i['rating'], -i['sentiment']))
-
-    # printing
-    print("TOP " + str(NUM_REVIEWS_PRINT) + " OVERLY POSITIVE REVIEWS")
-    print("--------------------------------------------------------------------")
-    for i in range(NUM_REVIEWS_PRINT):
-        print(reviews[top_users[i]["user"]]["date"])
-        print("rating: " + str(top_users[i]["rating"]) + "/5.0")
-        print(top_users[i]["user"] + ": " + reviews[top_users[i]["user"]]["title"])
-        print(reviews[top_users[i]["user"]]["review"])
-        print("--------------------------------------------------------------------")"""
 
 
 if __name__ == "__main__":

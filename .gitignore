@@ -3,3 +3,4 @@ ratings.txt
 test.py
 .DS_Store
 __pycache__/
+.pytest_cache
