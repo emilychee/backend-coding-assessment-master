@@ -30,6 +30,13 @@ To run this program:
 python3 review_analysis.py
 ```
 
+## Running the Tests
+
+Install pytest using pip.
+```bash
+pip3 install pytest
+```
+
 ## Criteria for Rating Reviews
 
 My first step was to weed out the recommendations that weren't consistent (i.e. the person left high ratings but didn't recommend the dealer or vice versa). If the person left a rating greater than or equal to 2.5 and didn't recommend the dealer, I discarded that review. Similarly, if the person left a rating of less than 2.5 and did recommend the dealer, I discarded that review.

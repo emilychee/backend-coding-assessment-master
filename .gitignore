@@ -2,3 +2,4 @@ env/
 ratings.txt
 test.py
 .DS_Store
+__pycache__/
