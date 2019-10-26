@@ -10,17 +10,17 @@ What this program does:
 
 ## Getting Started
 
-To run this program, you will need Python 3.5.2 and pip installed on your machine before you complete any of the other steps.
+To run this program, you will need Python 3.5.2 and pip3 installed on your machine before you complete any of the other steps.
 
 1. Clone this repository.
 ```bash
 git clone https://github.com/emilychee/backend-coding-assessment-master.git
 ```
 
-2. Install the following packages: re, requests, bs4, and textblob. Use the pip package manager to do this.
+2. Install the following packages: re, requests, bs4, and textblob. Use the pip3 package manager to do this.
 
 ```bash
-pip install re requests bs4 textblob
+pip3 install re requests bs4 textblob
 ```
 
 ## Usage
@@ -32,7 +32,7 @@ python3 review_analysis.py
 
 ## Running the Tests
 
-Install pytest, pydocstyle, pycodestyle and the sh library using pip.
+Install pytest, pydocstyle, pycodestyle and the sh library using pip3.
 ```bash
 pip3 install pytest pydocstyle pycodestyle sh
 ```
