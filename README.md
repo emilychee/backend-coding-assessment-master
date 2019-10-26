@@ -32,9 +32,9 @@ python3 review_analysis.py
 
 ## Running the Tests
 
-Install pytest using pip.
+Install pytest, pydocstyle and the sh library using pip.
 ```bash
-pip3 install pytest
+pip3 install pytest pydocstyle sh
 ```
 
 ## Criteria for Rating Reviews
