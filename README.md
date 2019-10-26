@@ -32,9 +32,23 @@ python3 review_analysis.py
 
 ## Running the Tests
 
-Install pytest, pydocstyle and the sh library using pip.
+Install pytest, pydocstyle, pycodestyle and the sh library using pip.
 ```bash
-pip3 install pytest pydocstyle sh
+pip3 install pytest pydocstyle pycodestyle sh
+```
+
+To run the tests, you must be in the backend-coding-assessment-master directory.
+To run all the tests at once:
+```bash
+pytest -v
+```
+To run a single test file:
+```bash
+pytest -v tests/<filename_of_test>
+```
+For example:
+```bash
+pytest -v tests/test_python_style.py
 ```
 
 ## Criteria for Rating Reviews

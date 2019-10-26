@@ -1,3 +1,5 @@
+"""Test web scraping functions."""
+
 import pytest
 import requests
 import os

@@ -1,3 +1,5 @@
+"""Test sentiment analysis functions."""
+
 import pytest
 import requests
 import os

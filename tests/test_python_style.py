@@ -1,3 +1,5 @@
+"""Check Python style with pycodestyle and pydocstyle."""
+
 import pytest
 import requests
 import os
