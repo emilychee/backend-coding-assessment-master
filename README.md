@@ -38,6 +38,7 @@ pip3 install pytest pydocstyle pycodestyle sh
 ```
 
 To run the tests, you must be in the backend-coding-assessment-master directory.
+
 To run all the tests at once:
 ```bash
 pytest -v
@@ -46,7 +47,7 @@ To run a single test file:
 ```bash
 pytest -v tests/<filename_of_test>
 ```
-For example:
+Example of running a single test file:
 ```bash
 pytest -v tests/test_python_style.py
 ```
