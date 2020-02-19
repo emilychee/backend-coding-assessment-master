@@ -1,4 +1,4 @@
-# “A Dealer For the People”
+# A Dealer For the People
 
 The KGB has noticed a resurgence of overly excited reviews for a McKaig Chevrolet Buick, a dealership they have planted in the United States. In order to avoid attracting unwanted attention, I've created a Python program to scrape reviews for this dealership from DealerRater.com and uncover the top three worst offenders of these overly positive endorsements.
 
